@@ -34,7 +34,7 @@ namespace CsvToClass
 
             Console.WriteLine("Processing File ...");
             var generator = new CsvClassGenerator.ClassGenerator();
-            generator.GenerateClass(defaultInputFile, destinationFilePath);
+            generator.GenerateClass(defaultInputFile, destinationFilePath, nameSpace.ToString());
 
             Console.WriteLine("Class written. Press any key.");
             Console.ReadKey();

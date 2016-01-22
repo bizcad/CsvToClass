@@ -13,12 +13,12 @@ namespace CsvClassGenerator
     {
         private string _inputFile;
         private string _destFile;
-        public void GenerateClass(string defaultInputFile, string destinationFilePath)
+        public void GenerateClass(string defaultInputFile, string destinationFilePath,string name_space)
         {
             _inputFile = defaultInputFile;
             _destFile = destinationFilePath;
             string className = new FileInfo(destinationFilePath).Name.Replace(".cs", "");
-            string classspec = FormatClass("ScheduleD", className);
+            string classspec = FormatClass(name_space, className);
             using (var sw = new StreamWriter(_destFile, false))
             {
                 sw.WriteLine(classspec);

@@ -21,6 +21,8 @@ namespace CsvClassGenerator
             int rownum = 0;
             foreach (var line in rows)
             {
+                if (line.Trim().Length == 0)
+                    continue;
                 var row = SplitLine(line);
                 for (var columnid = 0; columnid < headings.Length; columnid++)
                 {
@@ -169,51 +171,33 @@ namespace CsvClassGenerator
 
         public static bool CheckTime(string s)
         {
-            if (s.Contains("-"))
-            {
-                if (s.Contains(":"))
-                    return true;
-            }
-
-            string[] hms = s.Split(':');
-            //var a = hms.Length == 3;
-            //var b = int.Parse(hms[0]) < 24;
-            //var c = int.Parse(hms[1]) < 60;
-            //var d = int.Parse(hms[2]) < 60;
-            //return (a && b && c && d);
-            return hms.Length == 3
-                   && int.Parse(hms[0]) < 24
-                   && int.Parse(hms[1]) < 60
-                   && int.Parse(hms[2]) < 60;
+            return TimeChecker.IsValidTime(s);
         }
 
         public static bool CheckDate(string s)
         {
-            DateTime date;
-            if (s.Contains("-"))
-            {
-                if (s.Contains(":"))
-                    return true;
-                string[] ymd = s.Split('-');
-                if (ymd.Length != 3)
-                    return false;
-                if (ymd[0].Length == 0 || ymd[1].Length == 0 || ymd[2].Length == 0)
-                    return false;
-                return ymd.Length == 3
-                  && int.Parse(ymd[0]) > 1970
-                  && int.Parse(ymd[1]) <= 12
-                  && int.Parse(ymd[2]) <= 31;
-            }
-
-            return DateTime.TryParse(s, out date);
+            return DateChecker.IsValidDate(s);
         }
-
         public static string[] SplitLine(string line)
         {
-            return line.Split(',');
-            //return line.Replace("\",\"", "|").Split('|');
+            string filtered = FilterCommasInFields(line);
 
-            //CheckForStartingDoubleQuote(CheckForEndingDoubleQuote(
+            return filtered.Split(',');
+
+        }
+
+        private static string FilterCommasInFields(string line)
+        {
+            string dq = "\"";
+            while (line.Contains(dq))
+            {
+                int start = line.IndexOf(dq);
+                int end = line.IndexOf(dq, start + 1);
+                string partline = line.Substring(start, end - start + 1);
+                string newpart = partline.Replace(",", string.Empty).Replace(dq, string.Empty);
+                line = line.Replace(partline, newpart);                
+            }
+            return line;
         }
 
         public static string CheckForEndingDoubleQuote(string l)
