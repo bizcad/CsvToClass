@@ -31,22 +31,8 @@
 *.x86_64
 *.hex
 
-# QC Cloud Setup Bash Files
-*.sh
-
 # QC Config Files:
 # config.json
-
-# QC-C-Specific
-*Engine/bin/Debug/cache/data/*.zip
-*/obj/*
-*/bin/*
-*Data/*
-*Docker/*
-*/Docker/*
-*Algorithm.Python/Lib/*
-*/[Ee]xtensions/*
-!**/Libraries/*
 
 # C Debug Binaries
 *.pdb
