@@ -1,4 +1,4 @@
-﻿namespace CsvToClass
+namespace CsvToClass
 {
     public class Enums
     {

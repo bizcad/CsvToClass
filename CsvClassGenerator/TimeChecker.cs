@@ -1,4 +1,4 @@
-﻿namespace CsvClassGenerator
+namespace CsvClassGenerator
 {
     public static class TimeChecker
     {
